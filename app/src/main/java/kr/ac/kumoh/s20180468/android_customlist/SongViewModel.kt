@@ -33,7 +33,7 @@ class SongViewModel(application: Application) : AndroidViewModel(application) {
 
     fun requestSong() {
         // NOTE: 서버 주소는 본인의 서버 IP 사용할 것
-        val url = "https://expresssongdb-inhbm.run.goorm.io/song"
+        val url = "https://expresssongdb-vfdlq.run.goorm.io/"
 
         // Array를 반환할 경우에는 JsonObjectRequest 대신 JsonArrayRequest 사용
         val request = JsonArrayRequest(
