@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.toolbox.NetworkImageView
 import kr.ac.kumoh.s20180468.android_customlist.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -50,6 +51,12 @@ class MainActivity : AppCompatActivity() {
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val txTitle: TextView = itemView.findViewById(R.id.text1)
             val txSinger: TextView = itemView.findViewById(R.id.text2)
+            val niImage: NetworkImageView = itemView.findViewById(R.id.image)
+
+            init {
+                //이미지 가 없는 경우 디폴트로 안드로이드에 있는 이미지
+                niImage.setDefaultImageResId(android.R.drawable.ic_menu_report_image)
+            }
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -64,6 +71,7 @@ class MainActivity : AppCompatActivity() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.txTitle.text = model.list.value?.get(position)?.title
             holder.txSinger.text = model.list.value?.get(position)?.singer
+            holder.niImage.setImageUrl(model.getImageUri(position), model.imageLoader)
         }
 
         override fun getItemCount() = model.list.value?.size ?: 0
