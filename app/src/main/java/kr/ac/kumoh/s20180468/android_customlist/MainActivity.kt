@@ -1,11 +1,14 @@
 package kr.ac.kumoh.s20180468.android_customlist
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     inner class SongAdapter : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
-        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) , OnClickListener{
             val txTitle: TextView = itemView.findViewById(R.id.text1)
             val txSinger: TextView = itemView.findViewById(R.id.text2)
             val niImage: NetworkImageView = itemView.findViewById(R.id.image)
@@ -56,6 +59,24 @@ class MainActivity : AppCompatActivity() {
             init {
                 //이미지 가 없는 경우 디폴트로 안드로이드에 있는 이미지
                 niImage.setDefaultImageResId(android.R.drawable.ic_menu_report_image)
+                itemView.setOnClickListener(
+                //{
+                    //Toast.makeText(applicationContext, txTitle.text ,Toast.LENGTH_LONG).show()
+                    //ViewHolder, 한 학생마다 코드 복사 or 깃허브 주소 알려주기
+                    //ViewHodler 하나 만들자 View Holder 에 OnclickListener 넣기
+                    this
+                //}
+                )
+            }
+
+            override fun onClick(v: View?) {
+                //Toast.makeText(application, model.list.value?.get(adapterPosition)?.title, Toast.LENGTH_SHORT).show()
+                val intent = Intent(application, SongActivity::class.java)
+                val song = model.list.value?.get(adapterPosition)
+                intent.putExtra(SongActivity.KEY_TITLE, song?.title)
+                intent.putExtra(SongActivity.KEY_SINGER, song?.singer)
+                intent.putExtra(SongActivity.KEY_IMAGE, model.getImageUri(adapterPosition))
+                startActivity(intent)
             }
         }
 
